@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.5.0
-  aws-ecr: circleci/aws-ecr@7.3.0
 
 jobs:
   build-and-test:
@@ -24,12 +23,13 @@ jobs:
           name: install unzip
           command: |
             yum install -y unzip
-      - aws-ecr/build-and-push-image:
-          region: AWS_DEFAULT_REGION
-          repo: 293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5
-          tag: ${CIRCLE_SHA1:0:0},latest-${CIRCLE_BRANCH//\//-}
-          extra-build-args: >-
-            --progress=plain
+      - run:
+          name: login to ECR and push image
+          command: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 293362435147.dkr.ecr.us-east-1.amazonaws.com
+            docker build -t project-5 .
+            docker tag project-5:latest 293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5:latest
+            docker push 293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5:latest
 
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
