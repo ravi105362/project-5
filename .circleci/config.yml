@@ -38,6 +38,8 @@ jobs:
 
   create_cluster:
     docker:
+      - image: cimg/python:3.11.0
+    steps:
       - checkout
       - run:
           name: install eksctl
