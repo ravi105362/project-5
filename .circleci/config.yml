@@ -23,7 +23,7 @@ jobs:
       - run:
           name: install unzip
           command: |
-            sudo yum install unzip
+            yum install -y unzip
       - aws-ecr/build-and-push-image:
           region: AWS_DEFAULT_REGION
           repo: 293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5
