@@ -36,6 +36,20 @@ jobs:
             docker tag project-5:latest 293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5:latest
             docker push 293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5:latest
 
+  create_cluster:
+    docker:
+      - checkout
+      - run:
+          name: install eksctl
+          command: |
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            sudo mv /tmp/eksctl /usr/local/bin
+            eksctl create cluster --name project-5 --region=us-east-1 --zones us-east-1a
+      - run:
+          name: deploy application
+          command: |
+            kubectl create deploy project-5 --image=293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5:latest
+
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     jobs:
@@ -43,3 +57,6 @@ workflows:
       - push-to-ecr:
           requires:
             - build-and-test
+      - create_cluster:
+          requires:
+            - push-to-ecr
