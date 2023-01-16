@@ -19,10 +19,10 @@ jobs:
       - image: cimg/python:3.11.0
     steps:
       - checkout
-      - run:
-          name: install unzip
-          command: |
-            yum install -y unzip
+      # - run:
+      #     name: install unzip
+      #     command: |
+      #       yum install -y unzip
       - run:
           name: login to ECR and push image
           command: |
