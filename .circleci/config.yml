@@ -1,30 +1,31 @@
-
 version: 2.1
 
 orbs:
   python: circleci/python@1.5.0
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build-and-test: 
+  build-and-test:
     docker:
       - image: cimg/python:3.10.2
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-          # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
-          # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
           name: Run tests
-          # This assumes pytest is installed via the install-package step above
           command: pytest
+  push-to-ecr:
+    executor: build-tools
+    steps:
+      - checkout
+      - aws-ecr/build-and-push-image:
+          repo: 293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5
+          tag: ${CIRCLE_SHA1:0:0},latest-${CIRCLE_BRANCH//\//-}
+          extra-build-args: >-
+            --progress=plain
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-and-test
+      - push-to-ecr
