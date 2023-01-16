@@ -16,7 +16,8 @@ jobs:
           name: Run tests
           command: pytest
   push-to-ecr:
-    executor: build-tools
+    docker:
+      - image: cimg/python:3.10.2
     steps:
       - checkout
       - aws-ecr/build-and-push-image:
