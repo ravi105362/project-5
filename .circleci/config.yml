@@ -16,7 +16,7 @@ jobs:
           command: pytest
   push-to-ecr:
     docker:
-      - image: amazon/aws-cli
+      - image: cimg/python:3.11.0
     steps:
       - checkout
       - run:
