@@ -17,11 +17,12 @@ jobs:
           command: pytest
   push-to-ecr:
     docker:
-      - image: cimg/python:3.10.2
+      - image: amazon/aws-cli
     steps:
       - checkout
       - aws-ecr/build-and-push-image:
           region: AWS_DEFAULT_REGION
+          registry-id: 293362435147
           repo: 293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5
           tag: ${CIRCLE_SHA1:0:0},latest-${CIRCLE_BRANCH//\//-}
           extra-build-args: >-
