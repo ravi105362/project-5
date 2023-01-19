@@ -61,7 +61,6 @@ jobs:
             mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
             kubectl version --short --client
             kubectl create deploy project-5 --image=293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5:latest
-            kubectl port-forward deployment/project-5 --address 8000:8000
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     jobs:
@@ -72,6 +71,6 @@ workflows:
       # - create_cluster:
       #     requires:
       #       - push-to-ecr
-      - deploy_app:
-          # requires:
-          #   - create_cluster
+      - deploy_app
+        # requires:
+        #   - create_cluster
