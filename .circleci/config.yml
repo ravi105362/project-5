@@ -72,6 +72,6 @@ workflows:
       # - create_cluster:
       #     requires:
       #       - push-to-ecr
-      - deploy_app:
+      - deploy_app
           # requires:
           #   - create_cluster
