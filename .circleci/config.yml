@@ -60,7 +60,6 @@ jobs:
             chmod +x ./kubectl
             mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
             kubectl version --short --client
-            rm ~/.kube/config
             aws eks update-kubeconfig --name project-5 --region us-east-1
             kubectl set image deployment/project-5 project-5=project-5:${CIRCLE_WORKFLOW_ID:0:7}
 #            # kubectl create deploy project-5 --image=293362435147.dkr.ecr.us-east-1.amazonaws.com/project-5:${CIRCLE_WORKFLOW_ID:0:7}
