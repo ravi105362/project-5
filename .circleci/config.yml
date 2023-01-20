@@ -70,9 +70,9 @@ workflows:
       - push-to-ecr:
           requires:
             - build-and-test
-      - create_cluster:
-          requires:
-            - push-to-ecr
-      # - deploy_app:
+      # - create_cluster:
       #     requires:
       #       - push-to-ecr
+      - deploy_app:
+          requires:
+            - push-to-ecr
