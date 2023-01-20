@@ -12,12 +12,13 @@ jobs:
       - run:
           name: install hadolint
           command: |
-          sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64
-          sudo chmod +x /bin/hadolint
+            sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64
+            sudo chmod +x /bin/hadolint
+
       - run:
           name: hadolint dockerfile
           command: |
-          /bin/hadolint Dockerfile
+            /bin/hadolint Dockerfile
 
   build-and-test:
     docker:
