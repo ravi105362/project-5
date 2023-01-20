@@ -3,4 +3,4 @@ from src.main import root
 
 def test_hello_world_api():
     output =  root()
-    assert output == {"message":"Hello World dev 2"}
+    assert output == {"message":"Hello World dev 3"}
